@@ -54,6 +54,7 @@ void setup() {
   check();
 }
 
+/* ------------ LOOP ------------*/
 void loop() {
 
   int raw = analogRead(PINSENS);
