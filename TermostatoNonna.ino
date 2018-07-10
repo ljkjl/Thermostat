@@ -33,7 +33,7 @@ const int rs = 7, en = 8, d4 = 9, d5 = 10, d6 = 11, d7 = 12;//up to date con orc
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 void setup() {
-  if (DEBAGG_MODE == 1)
+  if (DEBAGG_MODE != 0)
     Serial.begin(9600);
   GUASTO = false;
   timebaseCiclo = 0;
@@ -89,6 +89,7 @@ void loop() {
   check();
   timebaseCiclo = timebaseCiclo + 1;
   timebaseWDT = timebaseWDT + 1;
+  //digitalWrite(PINDISP, HIGH);
   delay(20); //50Hz is the way
 }
 
@@ -166,8 +167,10 @@ void check()
 //controllo illuminazione schermo.
 void blight()
 {
-  
-  if (setPoint, 1 != setpointPrec, 1)
+  float TEMPSP;
+  TEMPSP = round(setPoint * 10) / 10;
+  setpointPrec = round(setpointPrec * 10) / 10;
+  if (TEMPSP != setpointPrec)
   {
     digitalWrite(PINDISP, HIGH);
   }
@@ -189,7 +192,7 @@ void blight()
   if (DEBAGG_MODE == 1)
   {
     Serial.print("spp: ");
-    Serial.println(setpointPrec, 1);
+    Serial.println(TEMPSP);
 
     Serial.print("TBD: ");
     Serial.println(timebaseDisp, 1);
