@@ -1,5 +1,5 @@
 //in funzione per la prima volta su basetta ramata ore 18.02 giorno 08/06/18. Godi popolo.
-//versione definitiva 19/07/18, ore 
+//versione definitiva 21/07/18, ore 00.15
 
 #define DEBAGG_MODE 0 //a 1 abilita seriale e comunica dati. altrimenti niente. 
 
@@ -47,16 +47,15 @@ void setup() {
     Serial.begin(9600);
 
   pinMode(PININT, INPUT_PULLUP);
-  
+  pinMode(PINWTCHDOG, INPUT); //pin in alta impedenza per non scaricare C
+
   GUASTO = false;
   timebaseCiclo = 0;
   timebaseWDT = 0;
   temperatura = 0;
   setPoint = 0;
 
-  pinMode(PINWTCHDOG, INPUT); //pin in alta impedenza per non scaricare C
-
-  analogReference(INTERNAL);//AREF DAC. Vedere sotto.
+  analogReference(INTERNAL);  //AREF DAC. Vedere sotto.
 
   Schermo.begin(16, 2);
   
@@ -89,6 +88,7 @@ void loop() {
 
   if (GUASTO == false)
   {
+    ingressi();
     blight();
     uscite();
     //scrivo valore setpoint a Schermo
